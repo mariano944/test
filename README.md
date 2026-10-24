@@ -8,10 +8,11 @@ Richiede Node.js 16 o successivo. Da PowerShell nella cartella del progetto:
 
 ```powershell
 Copy-Item .env.example .env
+npm install
 npm start
 ```
 
-Aprire `http://127.0.0.1:3000`. Non sono richieste dipendenze npm esterne. Senza token il backend resta in modalità demo.
+Aprire `http://127.0.0.1:3000`. Senza token il backend resta in modalità demo.
 
 Per abilitare l’API per i sette campionati coperti dal piano gratuito iniziale:
 
@@ -19,7 +20,7 @@ Per abilitare l’API per i sette campionati coperti dal piano gratuito iniziale
 2. Copia il token nel file `.env`, sulla riga `FOOTBALL_DATA_TOKEN=...`.
 3. Riavvia il server.
 
-Il token è un segreto: non incollarlo in chat, non inserirlo nei file frontend e non aggiungere `.env` a Git. L’endpoint `GET /api/health` indica se il server ha un token; `GET /api/competitions` elenca le competizioni inizialmente supportate; `GET /api/matches?date=YYYY-MM-DD` restituisce le partite; `GET /api/matches/{id}` restituisce il dettaglio della partita quando disponibile; `GET /api/standings?competition=SA` restituisce la classifica. Gli endpoint partita/classifica rifiutano richieste se il token non è configurato.
+Il token è un segreto: non incollarlo in chat, non inserirlo nei file frontend e non aggiungere `.env` a Git. L’endpoint `GET /api/health` indica se il server ha un token; `GET /api/db/health` controlla la connessione MySQL; `GET /api/competitions` elenca le competizioni inizialmente supportate; `GET /api/matches?date=YYYY-MM-DD` restituisce le partite; `GET /api/matches/{id}` restituisce il dettaglio quando disponibile; `GET /api/standings?competition=SA` restituisce la classifica; `GET /api/history?competition=SA` legge le partite terminate salvate nel database.
 
 ## Interazioni incluse
 
@@ -31,10 +32,14 @@ Il token è un segreto: non incollarlo in chat, non inserirlo nei file frontend 
 - backend Node.js senza dipendenze di terze parti, con cache breve e adapter per football-data.org.
 - quando il token è valido, partite e classifiche vengono richieste al backend e mostrate con avviso di aggiornamento ritardato;
 - dettagli partita accessibili anche da tastiera, con marcatori e statistiche condizionali.
+- persistenza opzionale delle partite e delle classifiche in MySQL HeatWave;
+- schema SQL iniziale in `db/schema.sql` e controllo diagnostico `/api/db/health`.
 
 ## Dati
 
-Senza token, punteggi, orari, classifiche e notizie sono inventati e servono solo a presentare il layout. Con token valido, partite del giorno e classifica Serie A provengono dal backend football-data.org; i risultati gratuiti possono essere ritardati. Le news restano dimostrative. MySQL e storico non sono ancora integrati.
+Senza token, punteggi, orari, classifiche e notizie sono inventati e servono solo a presentare il layout. Con token valido, partite e classifiche provengono dal backend football-data.org; i risultati gratuiti possono essere ritardati. Le partite e le classifiche vengono salvate in MySQL soltanto quando `MYSQL_HOST`, `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_DATABASE` e `MYSQL_SSL_CA_PATH` sono configurati e il backend riesce a raggiungere il DB. L’endpoint DB del tuo account è privato: il backend deve girare su una macchina collegata alla VCN, oppure usare VPN/Bastion. Non rendere pubblico il DB per collegarlo dal PC.
 
-Prima di collegare fonti reali vanno verificati copertura, quote, licenze e condizioni di pubblicazione. Le credenziali dovranno essere conservate nel backend, mai nel browser.
+Per configurare MySQL, esegui `db/schema.sql` una volta con un utente amministrativo del DB, poi configura un utente applicativo con i soli permessi necessari. Salva password e percorso del certificato TLS nel `.env` locale; non inviarli in chat né inserirli in Git. Consulta la documentazione OCI su [come raggiungere un DB System privato](https://docs.oracle.com/en-us/iaas/mysql-database/doc/overview-connecting-db-system.html) e la documentazione ufficiale del driver [mysql2](https://github.com/sidorares/node-mysql2).
+
+Prima di pubblicare dati reali vanno verificati copertura, quote, licenze e condizioni di pubblicazione. Le credenziali restano nel backend, mai nel browser.
 

@@ -53,7 +53,7 @@ export class FootballDataProvider {
       goalDifference: row.goalDifference,
       points: row.points,
       crest: row.team?.crest || null,
-      lastUpdated: raw.season?.startDate || null,
+      lastUpdated: raw.lastUpdated || null,
     }));
   }
 

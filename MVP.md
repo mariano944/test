@@ -148,7 +148,8 @@ Il repository GitHub `mariano944/test` è vuoto e non contiene codice da preserv
 - Prototipo navigabile: realizzato in `index.html`, `styles.css` e `app.js`, con dati fittizi chiaramente etichettati.
 - Backend Node.js iniziale e adapter `football-data.org`: predisposti in `server.js` e `src/providers/football-data.js`; il provider si attiva solo con token locale.
 - La UI usa partite e classifiche reali quando il token è configurato; le schede partita interrogano anche il dettaglio del provider per eventi e statistiche, se il piano li rende disponibili.
-- MySQL, fonte belga, notizie autorizzate e deploy: ancora da fare dopo la verifica delle condizioni di utilizzo.
+- Driver `mysql2`, schema iniziale per partite/classifiche, persistenza opzionale e diagnostica DB: predisposti; il collegamento reale attende credenziali locali, certificato TLS e una via di rete alla VCN.
+- Fonte belga, notizie autorizzate e deploy: ancora da fare dopo la verifica delle condizioni di utilizzo.
 
 ## Decisioni ancora da prendere
 

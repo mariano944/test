@@ -4,6 +4,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { FootballDataProvider, FREE_COMPETITIONS } from './src/providers/football-data.js';
+import { MatchdayDatabase } from './src/storage/mysql.js';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 
@@ -29,6 +30,7 @@ await loadLocalEnv();
 
 const PORT = Number(process.env.PORT || 3000);
 const provider = new FootballDataProvider({ token: process.env.FOOTBALL_DATA_TOKEN || '' });
+const database = new MatchdayDatabase(process.env);
 const publicFiles = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/index.html', ['index.html', 'text/html; charset=utf-8']],
@@ -53,7 +55,13 @@ async function handleApi(url, method, response) {
       configured: provider.configured,
       dataMode: provider.configured ? 'provider' : 'demo',
       refreshMode: 'delayed/free-tier',
+      databaseConfigured: database.configured,
     });
+  }
+
+  if (url.pathname === '/api/db/health' && method === 'GET') {
+    const status = await database.health();
+    return sendJson(response, status.connected || !status.configured ? 200 : 503, status);
   }
 
   if (url.pathname === '/api/competitions' && method === 'GET') {
@@ -62,6 +70,19 @@ async function handleApi(url, method, response) {
       competitions: FREE_COMPETITIONS,
       note: 'La copertura del piano può cambiare. Il Belgio richiede un’altra fonte.',
     });
+  }
+
+  if (url.pathname === '/api/history' && method === 'GET') {
+    const competition = url.searchParams.get('competition') || 'SA';
+    if (!FREE_COMPETITIONS.some((item) => item.code === competition)) {
+      return sendJson(response, 400, { error: 'unsupported_competition', message: 'Competizione non inclusa nella mappatura gratuita iniziale.' });
+    }
+    const status = await database.health();
+    if (!status.connected) return sendJson(response, 503, { error: 'database_unavailable', message: status.message || 'Database non disponibile.' });
+    const requestedLimit = Number(url.searchParams.get('limit') || 50);
+    const limit = Number.isInteger(requestedLimit) ? Math.max(1, Math.min(requestedLimit, 100)) : 50;
+    const matches = await database.getHistory(competition, limit);
+    return sendJson(response, 200, { competition, matches });
   }
 
   if (!provider.configured) {
@@ -77,6 +98,10 @@ async function handleApi(url, method, response) {
       return sendJson(response, 400, { error: 'invalid_date', message: 'Usa una data nel formato YYYY-MM-DD.' });
     }
     const matches = await provider.getMatches(date);
+    if (database.readyToConnect && matches.length) {
+      try { await database.saveMatches(matches); }
+      catch (error) { console.error(`[matchday] database match save failed: ${error.code || 'database_error'}`); }
+    }
     return sendJson(response, 200, { date, delayed: true, matches });
   }
 
@@ -92,6 +117,10 @@ async function handleApi(url, method, response) {
       return sendJson(response, 400, { error: 'unsupported_competition', message: 'Competizione non inclusa nella mappatura gratuita iniziale.' });
     }
     const standings = await provider.getStandings(competition);
+    if (database.readyToConnect && standings.length) {
+      try { await database.saveStandings(competition, standings); }
+      catch (error) { console.error(`[matchday] database standings save failed: ${error.code || 'database_error'}`); }
+    }
     return sendJson(response, 200, { competition, standings, delayed: true });
   }
 
