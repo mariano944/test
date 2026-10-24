@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+node_modules/
+npm-debug.log*
+.DS_Store
+
+# File personali e artefatti locali non appartenenti all'app
+*.pdf
+page2-check-2.png
+
