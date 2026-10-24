@@ -1,0 +1,15 @@
+{
+  "name": "matchday-prototype",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Prototipo web Matchday con backend API per fonti calcistiche",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
+

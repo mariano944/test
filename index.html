@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#080b11" />
+    <meta name="description" content="Anteprima della piattaforma Matchday: calcio, partite e notizie in un'unica esperienza." />
+    <title>Matchday — Il calcio, in tempo reale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <a class="brand" href="#home" aria-label="Matchday home">
+          <span class="brand-mark"><svg viewBox="0 0 36 36" aria-hidden="true"><path d="M18 2.8 31.2 10.4v15.2L18 33.2 4.8 25.6V10.4L18 2.8Z"/><path d="m18 10 5.2 3.8-2 6.1h-6.4l-2-6.1L18 10Zm0 0v-7M12.8 13.8l-8-3.4m16.4 9.5 10 5.7m-17.6-5.7L4.8 25.6m16.4-5.7-3.2 13.3m-5.2-19.4L4.8 10.4m18.4 3.4 8-3.4"/></svg></span>
+          <span class="brand-name">MATCH<span>DAY</span></span>
+        </a>
+        <div class="sidebar-label">MENU</div>
+        <nav class="main-nav" aria-label="Navigazione principale">
+          <a class="nav-item active" href="#home"><span class="nav-icon">◫</span> Panoramica <span class="nav-current"></span></a>
+          <a class="nav-item" href="#partite"><span class="nav-icon">◷</span> Partite <span class="nav-count">24</span></a>
+          <a class="nav-item" href="#classifiche"><span class="nav-icon">▤</span> Classifiche</a>
+          <a class="nav-item" href="#notizie"><span class="nav-icon">◉</span> News</a>
+        </nav>
+        <div class="sidebar-label leagues-label">CAMPIONATI <button class="tiny-plus" aria-label="Campionati">+</button></div>
+        <nav class="league-nav" id="league-nav" aria-label="Campionati"></nav>
+        <div class="sidebar-bottom">
+          <div class="weather-mini"><span class="weather-orb">✳</span><div><span>NOTTE DI CALCIO</span><small>Il prossimo match è alle 20:45</small></div></div>
+          <div class="profile"><div class="profile-avatar">M</div><div><b>Modalità ospite</b><small>Benvenuto su Matchday</small></div><button aria-label="Altre opzioni">···</button></div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="home">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobile-menu" aria-label="Apri menu">☰</button>
+          <div class="breadcrumb"><span>Matchday</span><i>/</i><b>Panoramica</b></div>
+          <div class="top-actions"><span class="system-status"><i></i> SISTEMA ONLINE</span><button class="icon-button search-open" id="search-open" aria-label="Cerca">⌕</button><button class="icon-button notification-button" aria-label="Notifiche">♧<i></i></button><div class="top-avatar">M</div></div>
+        </header>
+
+        <div class="content-wrap">
+          <div class="demo-banner" id="data-banner"><span>✦</span> ANTEPRIMA INTERATTIVA <b>DATI DIMOSTRATIVI · NON LIVE</b></div>
+          <section class="hero">
+            <div class="hero-copy"><div class="eyebrow"><span class="eyebrow-line"></span> <span id="hero-date">OGGI</span></div><h1>Il calcio.<br /><em>Senza filtri.</em></h1><p>Tutto quello che succede in campo, in un solo posto.</p>
+              <div class="hero-ctas"><a class="primary-cta" href="#partite">Esplora le partite <span>↗</span></a><a class="text-cta" href="#notizie">Ultime notizie <span>→</span></a></div>
+            </div>
+            <div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit orbit-c"></div><div class="pitch"><div class="pitch-line midline"></div><div class="pitch-circle"></div><div class="pitch-box left-box"></div><div class="pitch-box right-box"></div><div class="pitch-glow"></div></div><div class="hero-ball">◉</div><div class="hero-art-label label-top">MATCH INTELLIGENCE <b>01 / 08</b></div><div class="hero-art-label label-bottom">DATI · STORIE · PASSIONE <b>EST. 2026</b></div><div class="hero-live-chip"><span class="pulse"></span> FOOTBALL IS ON</div></div>
+            <div class="hero-index">01<span>—</span>08</div>
+          </section>
+
+          <section class="score-strip" aria-label="Riepilogo giornata"><div class="score-intro"><span class="strip-kicker">MATCH CENTER</span><b>La giornata<br />in numeri</b></div><div class="score-stat"><strong id="match-total">24</strong><span>PARTITE<br />IN PROGRAMMA</span></div><div class="score-stat"><strong>08</strong><span>CAMPIONATI<br />SEGUITI</span></div><div class="score-stat"><strong>08</strong><span>PAESI<br />IN EVIDENZA</span></div><div class="score-strip-mark">M<span>.</span></div></section>
+
+          <section class="matches-section" id="partite">
+            <div class="section-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> CENTRO PARTITE</div><h2>Oggi in campo<span class="heading-dot">.</span></h2></div><a class="section-link" href="#partite">Tutte le partite <span>↗</span></a></div>
+            <div class="matches-toolbar"><div class="day-switch"><button id="day-prev" aria-label="Giorno precedente">‹</button><b id="selected-date">OGGI, 21 OTT</b><button id="day-next" aria-label="Giorno successivo">›</button></div><div class="match-tabs" role="tablist" aria-label="Filtra partite"><button class="match-tab active" data-status="all">Tutte <span>24</span></button><button class="match-tab" data-status="live"><i class="mini-live"></i> Live <span>3</span></button><button class="match-tab" data-status="upcoming">In arrivo <span>12</span></button><button class="match-tab" data-status="finished">Terminate <span>9</span></button></div><button class="filter-button" id="filter-button">☷ <span>Filtri</span></button></div>
+            <div class="league-chips" id="league-chips"></div>
+            <div class="match-grid" id="match-grid"></div>
+            <div class="load-more"><span></span><button id="load-more">CARICA ALTRE PARTITE <b>↓</b></button><span></span></div>
+          </section>
+
+          <section class="lower-grid">
+            <div class="news-panel" id="notizie"><div class="panel-head"><div><div class="eyebrow"><span class="eyebrow-line"></span> DAL MONDO DEL CALCIO</div><h2>Fuori dal campo<span class="heading-dot">.</span></h2></div><a class="section-link" href="#notizie">Tutte le news ↗</a></div><div class="news-list" id="news-list"></div></div>
+            <div class="standings-panel" id="classifiche"><div class="panel-head"><div><div class="eyebrow"><span class="eyebrow-line"></span> LA CORSA AL TITOLO</div><h2>Classifica<span class="heading-dot">.</span></h2></div><select class="league-select" id="standing-select" aria-label="Scegli il campionato"><option value="SA">Serie A</option><option value="PD">La Liga</option><option value="PL">Premier League</option><option value="FL1">Ligue 1</option><option value="BL1">Bundesliga</option><option value="PPL">Primeira Liga</option><option value="DED">Eredivisie</option></select></div><div class="table-labels"><span>#</span><span>SQUADRA</span><span>G</span><span>DR</span><span>PT</span></div><div id="standing-table"></div><a class="standings-link" href="#classifiche">Classifica completa <span>↗</span></a></div>
+          </section>
+
+          <footer class="footer"><span class="footer-brand">MATCH<span>DAY</span></span><span>FOOTBALL DATA PROVIDED BY THE FOOTBALL-DATA.ORG API</span><span>ANTEPRIMA · 2026</span></footer>
+        </div>
+      </main>
+      <aside class="right-rail"><div class="rail-top"><span>LIVE DESK</span><button class="rail-more" aria-label="Altro">···</button></div><div class="live-card"><div class="live-card-head"><span><i class="mini-live"></i> LIVE CENTER</span><small>DEMO</small></div><div class="live-score"><div class="live-team"><div class="team-crest crest-red">M</div><span>MIL</span></div><div class="live-result"><b>2 <i>:</i> 1</b><small>67′ · 2° TEMPO</small></div><div class="live-team"><div class="team-crest crest-blue">J</div><span>JUV</span></div></div><div class="live-event"><span class="event-minute">64′</span><span>⚽</span><span>R. Leão</span><b>MIL 2–1</b></div><div class="live-event muted-event"><span class="event-minute">52′</span><span>🟨</span><span>Bremer</span><b>JUV</b></div><a href="#partite" class="live-detail">DETTAGLIO PARTITA <span>↗</span></a></div>
+        <div class="rail-section"><div class="rail-heading"><span>PROSSIMO FISCHIO</span><span>20:45</span></div><div class="next-match"><span class="next-league">UEFA CHAMPIONS LEAGUE</span><div class="next-teams"><div><div class="team-crest crest-white">R</div><b>RMA</b></div><span>VS</span><div><div class="team-crest crest-red">L</div><b>LIV</b></div></div><div class="countdown"><span>00</span><i>:</i><span>32</span><i>:</i><span>18</span></div><div class="countdown-labels"><span>ORE</span><span>MIN</span><span>SEC</span></div></div></div>
+        <div class="rail-section quick-pulse"><div class="rail-heading"><span>PULSE DELLA GIORNATA</span><span class="pulse-star">✳</span></div><div class="pulse-item"><span class="pulse-number">01</span><p>La corsa europea<br /><b>si accende</b></p><span class="pulse-arrow">↗</span></div><div class="pulse-item"><span class="pulse-number">02</span><p>Forma da imbattuti<br /><b>in quattro leghe</b></p><span class="pulse-arrow">↗</span></div><div class="pulse-item"><span class="pulse-number">03</span><p>Occhi sul mercato<br /><b>ultimi movimenti</b></p><span class="pulse-arrow">↗</span></div></div>
+        <div class="rail-foot"><span>BUILT FOR THE BEAUTIFUL GAME</span><span>✳</span></div>
+      </aside>
+    </div>
+    <div class="search-modal" id="search-modal" aria-hidden="true"><div class="search-box"><button id="search-close" aria-label="Chiudi">×</button><label for="global-search">CERCA SQUADRA O CAMPIONATO</label><input id="global-search" type="search" placeholder="Es. Inter, Premier League…" /><div class="search-hint">Premi invio per filtrare le partite</div></div></div>
+    <div class="match-modal" id="match-modal" aria-hidden="true"><section class="match-detail-panel" role="dialog" aria-modal="true" aria-labelledby="match-detail-title"><button id="match-detail-close" class="match-detail-close" aria-label="Chiudi dettagli partita">×</button><div id="match-detail-content"><h2 id="match-detail-title">Dettaglio partita</h2></div></section></div>
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
