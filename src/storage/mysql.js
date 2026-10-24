@@ -109,7 +109,11 @@ export class MatchdayDatabase {
         queueLimit: 0,
         charset: 'utf8mb4',
         timezone: 'Z',
-        ssl: { ca: this.#readCa(), rejectUnauthorized: true },
+        ssl: {
+          ca: this.#readCa(),
+          rejectUnauthorized: true,
+          ...(this.#env.MYSQL_SSL_SERVERNAME?.trim() ? { servername: this.#env.MYSQL_SSL_SERVERNAME.trim() } : {}),
+        },
       });
     }
     return this.#pool;
@@ -130,4 +134,5 @@ export class MatchdayDatabase {
     return 'Connessione MySQL non riuscita. Verifica TLS, nome database e rete OCI.';
   }
 }
+
 

@@ -35,6 +35,7 @@ export class FootballDataProvider {
       competitionName: match.competition?.name || 'Competizione',
       date: match.utcDate,
       status: match.status,
+      matchday: match.matchday ?? null,
       minute: match.minute ?? null,
       home: { id: match.homeTeam?.id, name: match.homeTeam?.shortName || match.homeTeam?.name || 'Casa', crest: match.homeTeam?.crest || null },
       away: { id: match.awayTeam?.id, name: match.awayTeam?.shortName || match.awayTeam?.name || 'Trasferta', crest: match.awayTeam?.crest || null },
@@ -113,4 +114,5 @@ export class FootballDataProvider {
     return value;
   }
 }
+
 
